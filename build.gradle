@@ -1,0 +1,56 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.1.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'war'
+
+def primefaces = '4.0'
+
+jar {
+    baseName = 'jsf-primefaces-example'
+    version =  '0.1.0'
+}
+
+war {
+	baseName = 'smartclock-master'
+	version = '0.0.1-SNAPSHOT'
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+	maven {
+		url "http://repository.primefaces.org"
+	}
+}
+
+configurations {
+	providedRuntime
+}
+
+dependencies {
+	compile('javax.servlet:jstl:1.2')
+		
+	compile('org.springframework.boot:spring-boot-starter-jersey')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('com.fasterxml.jackson.core:jackson-databind')
+	
+	runtime('com.h2database:h2')
+	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+	
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+}
